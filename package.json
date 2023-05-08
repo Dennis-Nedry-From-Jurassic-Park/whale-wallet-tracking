@@ -1,0 +1,48 @@
+{
+  "name": "atr-template-ts",
+  "version": "0.1.0",
+  "private": true,
+  "standard": "ignore",
+  "author": "Dennis-Nedry-From-Jurassic-Park <dennis.nedry.from.jurassic.park@gmail.com>",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "packages/**",
+    "shared/*"
+  ],
+  "scripts": {
+    "-------- pnpm common ------------": "",
+    "pnpm:add": "npx pnpm add -g pnpm",
+    "pnpm:setup": "npx pnpm setup",
+    "-------- pnpm package ----------": "",
+    "pnpm:add:p": "npx pnpm add lodash",
+    "pnpm:install": "npx pnpm -r install --recursive",
+    "----------- docker -----------": "",
+    "docker:run:stop:all": "docker stop $(docker ps -a -q)",
+    "docker:run:ms:app": "docker-compose -f docker-compose.yml up -d",
+    "docker:down:ms:cron": "docker-compose -f docker-compose-cron.yml down --remove-orphans",
+    "docker:tag:ms:cron": "docker tag 7097bc9a6667f62ef8cec701a78e785a1a8c059fd4ebe0c5c4b3ebbcb6761797 deps:0.0.1",
+    "docker:build:ms:cron": "docker build . --no-cache --progress=tty -f docker/ms-cron/Dependencies.Dockerfile",
+    "docker:run:ms:cron": "docker-compose -f docker-compose-cron.yml up -d --quiet-pull --build atr_ms_template",
+    "----------- doppler -----------": "",
+    "doppler:login": "doppler login",
+    "doppler:setup": "doppler setup",
+    "----------- runners -----------": "",
+    "main": "ts-node packages/backend/apps/ms-template/src/main.ts",
+    "exec": "doppler run -- ts-node packages/backend/apps/ms-template/src/main.ts",
+    "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "lint": "eslint --color --fix --ext .ts,.js,.jsx packages/backend/apps/ms-src/src",
+    "lint-q": "eslint --color --fix --quiet --ext .ts,.js,.jsx packages/backend/apps/ms-src/src",
+    "test": "jest"
+  },
+  "dependencies": {
+    "rxjs": "^7.5.6",
+    "ts-node": "^10.9.1",
+    "@types/node": "^18.11.18",
+    "typescript": "^4.8.4"
+  },
+
+  "packageManager": "pnpm@7.26.3"
+}
